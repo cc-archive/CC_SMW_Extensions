@@ -85,8 +85,6 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 			//smwfRequireHeadItem('ical' . $smwgIQRunningNumber, '<link rel="alternate" type="text/calendar" title="' . $this->m_title . '" href="' . $link->getURL() . '" />');
 		}
 
-		fclose($out);
-
 		return $result;
 	}
 
