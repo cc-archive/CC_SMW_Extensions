@@ -38,27 +38,28 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 
 		if ($outputmode == SMW_OUTPUT_FILE) { // make CSV file
 
-			while ( $row = $res->getNext() ) {
+		   $csv = fopen('php://temp/maxmemory:'. (2*1024*1024), 'r+');
 
-			      $row_items = array();
+		   while ( $row = $res->getNext() ) {
 
-			foreach ($row as $field) {
+		      $row_items = array();
 
-			    while ( ($object = $field->getNextObject()) !== false ) {
-				$text = $object->getWikiValue();
+		      foreach ($row as $field) {
 
-			        if ($object->getTypeID() == '_wpg') {
-				    $text = '"' . $text . '"';
-				}
-
-				$row_items[] = $text;
+		         while (($object = $field->getNextObject()) !== false) {
+			    $text = $object->getWikiValue();
+			    $row_items[] = $text;
 			    } // while...
-			} // foreach...
+
+		      } // foreach...
+
+		      fputcsv($csv, $row_items);
+
+		   } // while...
 
 
-			$result .= implode(",", $row_items) . "\n";
-
-			} // while...
+		   rewind($csv);
+		   $result .= stream_get_contents($csv);
 
 		} else { // just make link to feed
 
@@ -83,6 +84,8 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 			// is this useful?
 			//smwfRequireHeadItem('ical' . $smwgIQRunningNumber, '<link rel="alternate" type="text/calendar" title="' . $this->m_title . '" href="' . $link->getURL() . '" />');
 		}
+
+		fclose($out);
 
 		return $result;
 	}
