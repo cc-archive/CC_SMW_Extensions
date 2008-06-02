@@ -28,7 +28,7 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 	} // getResult
 
 	public function getMimeType($res) {
-		return 'text/plain';
+		return 'text/csv';
 	} // getMimeType
 
 	protected function getResultText($res, $outputmode) {
