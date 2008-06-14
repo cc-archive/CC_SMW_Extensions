@@ -10,7 +10,7 @@
  * 
  * @note AUTOLOADED
  */
-class SMSumResultPrinter extends SMWResultPrinter {
+class SMWSumResultPrinter extends SMWResultPrinter {
 
 	protected $mSep = '';
 	protected $mTemplate = '';
