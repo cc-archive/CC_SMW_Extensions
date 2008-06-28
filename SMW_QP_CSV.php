@@ -45,12 +45,13 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 		      $row_items = array();
 
 		      foreach ($row as $field) {
-
-		         while (($object = $field->getNextObject()) !== false) {
-			    $text = $object->getWikiValue();
-			    $row_items[] = $text;
-			    } // while...
-
+			$growing = array();
+			while (($object = $field->getNextObject()) !== false) {
+			  $text = $object->getWikiValue();
+			  $growing[] = $text;
+			} // while...
+			$row_items[] = implode(',', $growing);
+			
 		      } // foreach...
 
 		      fputcsv($csv, $row_items);
